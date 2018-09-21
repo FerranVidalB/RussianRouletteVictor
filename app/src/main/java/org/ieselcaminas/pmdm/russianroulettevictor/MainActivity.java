@@ -11,7 +11,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     public static final int NUM_BULLETS = 6;
     private Button[] buttons;
-    private int bulletIndex;
+    private Button bulletButton;
     private FrameLayout bangLayout;
     private TextView textBang;
     private boolean gameOver;
@@ -23,11 +23,11 @@ public class MainActivity extends AppCompatActivity {
 
         textBang = findViewById(R.id.textViewBang);
         bangLayout = findViewById(R.id.bangLayout);
-
+        createButtons();
         insertBulletIntoTheBarrel();
 
 
-        createButtons();
+
 
         assignActionToReload();
     }
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             buttons[i] = new Button(this, null, android.R.attr.buttonStyleSmall);
             buttons[i].setText("" + (i + 1));
             barrel.addView(buttons[i]);
-            buttons[i].setTag(i);
+
 
             buttons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                     if(gameOver)return;
 
                     v.setEnabled(false);
-                    if (v.getTag().equals(bulletIndex)) {
+                    if (v==bulletButton) {
                         bang();
                     }
                 }
@@ -91,7 +91,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void insertBulletIntoTheBarrel() {
-        bulletIndex = (int) (Math.random() * NUM_BULLETS);
-        gameOver = false;
+       int  bulletIndex = (int) (Math.random() * NUM_BULLETS);
+       bulletButton=buttons[bulletIndex];
+       gameOver = false;
+
     }
 }
